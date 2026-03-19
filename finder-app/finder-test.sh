@@ -2,8 +2,7 @@
 # Tester script for assignment 1 and assignment 2
 # Author: Siddhant Jajoo
 
-set -e
-set -u
+set -eu
 
 NUMFILES=10
 WRITESTR=AELD_IS_FUN
@@ -32,7 +31,7 @@ echo "Writing ${NUMFILES} files containing string ${WRITESTR} to ${WRITEDIR}"
 rm -rf "${WRITEDIR}"
 
 # create $WRITEDIR if not assignment1
-assignment=`cat ../conf/assignment.txt`
+assignment=`cat conf/assignment.txt`
 
 if [ $assignment != 'assignment1' ]
 then
@@ -48,26 +47,33 @@ then
 		exit 1
 	fi
 fi
-#echo "Removing the old writer utility and compiling as a native application"
+
+echo "Removing the old writer utility and compiling as a native application"
 #make clean
 #make
 
+# Execute writer
 for i in $( seq 1 $NUMFILES)
 do
-	./writer.sh "$WRITEDIR/${username}$i.txt" "$WRITESTR"
+	./writer "$WRITEDIR/${username}$i.txt" "$WRITESTR"
 done
 
-OUTPUTSTRING=$(./finder.sh "$WRITEDIR" "$WRITESTR")
+# Test that NUMFILES files exist
+COUNT=$(ls "$WRITEDIR" | wc -l)
 
-# remove temporary directories
-rm -rf /tmp/aeld-data
-
-set +e
-echo ${OUTPUTSTRING} | grep "${MATCHSTR}"
-if [ $? -eq 0 ]; then
-	echo "success"
-	exit 0
-else
-	echo "failed: expected  ${MATCHSTR} in ${OUTPUTSTRING} but instead found"
-	exit 1
+if [ "$COUNT" -ne "$NUMFILES" ]; then
+    echo "Failed: expected $NUMFILES but found $COUNT in $WRITEDIR"
+    exit 1
 fi
+
+# Test all files content
+for FILE in "$WRITEDIR"/*; do
+    CONTENT=$(cat "$FILE")
+
+    if [ "$CONTENT" != "$WRITESTR" ]; then
+        echo "Failed: wrong content in $FILE"
+        exit 1
+    fi
+done
+
+echo "Successfully created $NUMFILES files with $WRITESTR string."
