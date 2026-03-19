@@ -10,7 +10,7 @@ OUTDIR=/tmp/aeld
 
 # Kernel and BusyBox sources
 #KERNEL_REPO=git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
-KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
 KERNEL_VERSION=v5.15.163
 BUSYBOX_VERSION=1_33_1
 
