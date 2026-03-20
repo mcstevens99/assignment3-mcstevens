@@ -3,7 +3,7 @@
 # Author: Siddhant Jajoo.
 
 set -eu
-export PATH=$PATH:$HOME/arm-cross-compiler/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/bin
+#export PATH=$PATH:$HOME/arm-cross-compiler/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/bin
 
 # Output directory (can be overridden by the first CLI argument)
 OUTDIR=/tmp/aeld
@@ -42,7 +42,7 @@ cd "${OUTDIR}"
 # Clone only if the repository does not exist
 if [ ! -d "${OUTDIR}/linux-stable" ]; then
     echo "CLONING GIT LINUX STABLE VERSION ${KERNEL_VERSION} IN ${OUTDIR}"
-    git clone "${KERNEL_REPO}" --depth 1 --single-branch --branch "${KERNEL_VERSION}"
+    git -c http.sslVerify=false clone "${KERNEL_REPO}" --depth 1 --single-branch --branch "${KERNEL_VERSION}"
 fi
 
 # Prepare image file if it doesn't exist
