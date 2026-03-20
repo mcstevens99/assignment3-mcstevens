@@ -191,7 +191,7 @@ if [ -f "${FINDER_APP_DIR}/autorun-qemu.sh" ]; then
     install -m 0755 "${FINDER_APP_DIR}/autorun-qemu.sh" "${OUTDIR}/rootfs/home/autorun-qemu.sh"
 fi
 if [ -d "${FINDER_APP_DIR}/conf" ]; then
-    cp -a "${FINDER_APP_DIR}/conf/" "${OUTDIR}/rootfs/home/conf/"
+    cp -a "${FINDER_APP_DIR}/conf/." "${OUTDIR}/rootfs/home/conf/"
 fi
 
 # Fix ownership to root:root
