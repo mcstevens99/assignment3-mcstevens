@@ -6,8 +6,8 @@ all: writer
 
 # Build the writer application
 writer: writer.c
-    $(CC) -Wall -Werror writer.c -o writer
+	$(CC) -Wall -Werror writer.c -o writer
 
 # Clean build artifacts
 clean:
-    rm -f writer
+	rm -f writer
